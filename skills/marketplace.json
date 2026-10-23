@@ -1,0 +1,19 @@
+{
+  "name": "constellation-skills",
+  "description": "个人技能集：头脑风暴归档 / 知识库维护 / 小程序自动化",
+  "pluginRoot": ".",
+  "plugins": [
+    {
+      "name": "brainstorm-archive",
+      "source": "./brainstorm-archive"
+    },
+    {
+      "name": "kb-upkeep",
+      "source": "./kb-upkeep"
+    },
+    {
+      "name": "star-site-miniprogram-automation",
+      "source": "./star-site-miniprogram-automation"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+# os
+.DS_Store
+
+# secrets
+.env
+*.env.local
+
+# python
+__pycache__/
+.venv/
+
+# tool state
+.mimosa/

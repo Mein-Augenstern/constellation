@@ -1,0 +1,6 @@
+{
+  "name": "star-site-miniprogram-automation",
+  "version": "0.1.0",
+  "description": "自动化构建并测试 star-site 微信小程序（构建 + 微信开发者工具 cli auto + miniprogram-automator）",
+  "skills": ["."]
+}

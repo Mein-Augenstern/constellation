@@ -1,0 +1,6 @@
+{
+  "name": "kb-upkeep",
+  "version": "0.1.0",
+  "description": "维护 MUYI 这类个人知识库（markdown 仓库）的体检-修复-增补闭环",
+  "skills": ["."]
+}
