@@ -1,0 +1,6 @@
+{
+  "name": "kb-governance",
+  "version": "0.1.0",
+  "description": "知识库工程化治理闭环：体检→STC 规整→多维审稿复核→换场景复审（源自 MUYI 全库治理实战）",
+  "skills": ["."]
+}

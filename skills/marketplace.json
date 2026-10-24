@@ -12,6 +12,10 @@
       "source": "./kb-upkeep"
     },
     {
+      "name": "kb-governance",
+      "source": "./kb-governance"
+    },
+    {
       "name": "star-site-miniprogram-automation",
       "source": "./star-site-miniprogram-automation"
     }
