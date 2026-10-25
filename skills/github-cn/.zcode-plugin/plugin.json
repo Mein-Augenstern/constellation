@@ -1,0 +1,6 @@
+{
+  "name": "github-cn",
+  "version": "0.1.0",
+  "description": "国内断网环境下 GitHub 全流程操作：api tarball 克隆、git data API 三步推送、设备码授权、SSH-443、镜像源速查",
+  "skills": ["."]
+}

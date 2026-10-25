@@ -13,8 +13,12 @@ constellation/
 │   ├── marketplace.json             # 技能市场清单
 │   ├── brainstorm-archive/          # 演绎/竞品/决策 → docs 编号文档体系
 │   ├── kb-upkeep/                   # 知识库体检-修复-增补闭环（MUYI 等 md 库）
-│   └── star-site-miniprogram-automation/  # 小程序 E2E 自动化套路
+│   ├── star-site-miniprogram-automation/  # 小程序 E2E 自动化套路
+│   ├── github-cn/                   # 断网环境 GitHub 全流程（api 提交脚本可用）
+│   ├── wxdevtools-vision/           # 微信开发者工具截图驱动排障
+│   └── mimosa-safe-write/           # Mimosa 门禁下的写文件规矩与过审写法
 ├── mcp/                             # 星：MCP server（每个 server 独立可运行）
+│   ├── registry.json                # 注册表：自建可复现 + 外部通道迁移指引
 │   └── star-site/                   # 家庭健康后端（网关 /api）的 MCP 出口
 ├── docs/                            # 星图：工具使用真相与速查（docs/星图-2026-10.md）
 └── apps/                            # （规划）Observatory 管理后台

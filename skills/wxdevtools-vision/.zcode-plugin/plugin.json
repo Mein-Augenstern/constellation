@@ -1,0 +1,6 @@
+{
+  "name": "wxdevtools-vision",
+  "version": "0.1.0",
+  "description": "微信开发者工具无辅助功能权限时的截图驱动排障：截图+视觉模型读屏+WeappLog 定位+miniprogramRoot 修复",
+  "skills": ["."]
+}

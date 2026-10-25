@@ -1,6 +1,6 @@
 {
   "name": "constellation-skills",
-  "description": "个人技能集：头脑风暴归档 / 知识库维护 / 小程序自动化",
+  "description": "个人技能集：头脑风暴归档 / 知识库维护 / 小程序自动化 / 断网GitHub / 开发者工具视觉排障 / Mimosa 写法规矩",
   "pluginRoot": ".",
   "plugins": [
     {
@@ -18,6 +18,18 @@
     {
       "name": "star-site-miniprogram-automation",
       "source": "./star-site-miniprogram-automation"
+    },
+    {
+      "name": "github-cn",
+      "source": "./github-cn"
+    },
+    {
+      "name": "wxdevtools-vision",
+      "source": "./wxdevtools-vision"
+    },
+    {
+      "name": "mimosa-safe-write",
+      "source": "./mimosa-safe-write"
     }
   ]
 }

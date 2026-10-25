@@ -1,0 +1,34 @@
+{
+  "name": "constellation-mcp-registry",
+  "description": "MCP server 注册表：自建可复现 + 外部通道迁移指引",
+  "version": "0.1.0",
+  "self_hosted": [
+    {
+      "name": "star-site",
+      "dir": "star-site",
+      "runtime": "uv（PEP 723 内联依赖）",
+      "command": "uv run <repo>/mcp/star-site/server.py",
+      "env": {"STAR_SITE_BASE_URL": "http://127.0.0.1:8080/api", "STAR_SITE_TOKEN": "（可空，login 工具换 JWT）"},
+      "verified": "2026-10",
+      "tools": "member/health/reminder 读写 7 工具"
+    }
+  ],
+  "external_channels": [
+    {
+      "name": "node_repl",
+      "role": "浏览器/计算机控制的 JS 执行内核（browser-use 插件与 Computer Use SDK 的底座）",
+      "migration": "随 ZCode 官方 node-repl-host 插件提供，无需单独注册；技能侧记住'每次 js 调用重新 bootstrap'"
+    },
+    {
+      "name": "analyze_image（4_5v）",
+      "role": "视觉模型读图：截图逐字识别/布局描述，无辅助功能权限时的眼睛",
+      "migration": "注册参数在 ZCode 桌面端 MCP 设置内（HTTP 型，带独立 API key）；换机时从设置页导出或重新配置，key 不入库"
+    },
+    {
+      "name": "web_reader",
+      "role": "网页转 markdown（保留结构），官方文档核对首选",
+      "migration": "同上，ZCode 桌面端 MCP 设置内维护"
+    }
+  ],
+  "notes": "外部通道的具体 endpoint/key 存于客户端安全存储而非本仓；Observatory 后续可把注册动作自动化。"
+}

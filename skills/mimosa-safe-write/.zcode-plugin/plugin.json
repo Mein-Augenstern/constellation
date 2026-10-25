@@ -1,0 +1,6 @@
+{
+  "name": "mimosa-safe-write",
+  "version": "0.1.0",
+  "description": "Mimosa 安全门禁下的写文件规矩：Bash 写入必拦走 Write/Edit；SSRF/路径穿越/凭据三个 profile 的过审写法",
+  "skills": ["."]
+}
