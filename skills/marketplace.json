@@ -1,6 +1,6 @@
 {
   "name": "constellation-skills",
-  "description": "个人技能集：头脑风暴归档 / 知识库维护 / 小程序自动化 / 断网GitHub / 开发者工具视觉排障 / Mimosa 写法规矩",
+  "description": "个人技能集：头脑风暴归档 / 知识库维护与治理 / 组件构造 / 小程序自动化 / GitHub / 视觉排障",
   "pluginRoot": ".",
   "plugins": [
     {
@@ -30,6 +30,10 @@
     {
       "name": "mimosa-safe-write",
       "source": "./mimosa-safe-write"
+    },
+    {
+      "name": "component-builder",
+      "source": "./component-builder"
     }
   ]
 }
