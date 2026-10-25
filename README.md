@@ -16,6 +16,7 @@ constellation/
 │   └── star-site-miniprogram-automation/  # 小程序 E2E 自动化套路
 ├── mcp/                             # 星：MCP server（每个 server 独立可运行）
 │   └── star-site/                   # 家庭健康后端（网关 /api）的 MCP 出口
+├── docs/                            # 星图：工具使用真相与速查（docs/星图-2026-10.md）
 └── apps/                            # （规划）Observatory 管理后台
 ```
 
