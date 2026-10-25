@@ -8,13 +8,17 @@ description: star-site 系列通用组件构造十步规约。用户说"建组�
 > 铁律先记三条：**表无 AUTO_INCREMENT，物理主键一律 sequence 发号**；
 > **SQL 一律 Mapper XML，Java 零硬编码 SQL**；**每表必有 id / gmt_create / gmt_modified**。
 
-## 第 1 步：模块骨架（core/starter 双模块 + 可选适配层）
+## 第 1 步：模块骨架（core/starter 双模块）
 
 - `starsite-<name>`（core）：零 Spring Boot 依赖，可脱离 starter 独立使用
 - `starsite-<name>-spring-boot-starter`：仅粘合（自动装配 + 生命周期托管），本体全在 core
-- 需要接宿主生态（MyBatis/Redis）时加 `starsite-<name>-mybatis` 适配模块，
-  宿主依赖（mybatis、sequence-starter）一律 `provided`/`optional`——不传递强制依赖
+- **不再单设 mybatis 适配模块**（实战教训：适配模块代码量小且无独立使用场景）——
+  MyBatis 路径直接进 core：Mapper 接口 + 同包 XML 放 `com.xp.starsite.<name>.mybatis` 包，
+  mybatis/mybatis-spring 依赖 `provided`（由消费方 classpath 提供，不传递强制）；
+  MyBatis 专用自动装配放 starter（`@ConditionalOnBean(SqlSessionFactory)` + 
+  `@AutoConfigureAfter(MybatisAutoConfiguration by name)` + `@AutoConfigureBefore(默认装配)`）
 - starter 内注册 `META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports`
+  （MyBatis 装配排在默认装配之前）
 
 ## 第 2 步：分包（package-per-concern）
 
