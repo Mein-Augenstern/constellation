@@ -1,6 +1,6 @@
 {
   "name": "constellation-skills",
-  "description": "个人技能集：头脑风暴归档 / 知识库维护与治理 / 组件构造 / 小程序自动化 / GitHub / 视觉排障",
+  "description": "个人技能集：头脑风暴归档 / 知识库维护与治理 / 组件构造 / 小程序自动化 / GitHub / 视觉排障 / 多仓内容同步",
   "pluginRoot": ".",
   "plugins": [
     {
@@ -34,6 +34,10 @@
     {
       "name": "component-builder",
       "source": "./component-builder"
+    },
+    {
+      "name": "portfolio-sync",
+      "source": "./portfolio-sync"
     }
   ]
 }

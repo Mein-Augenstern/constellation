@@ -30,7 +30,7 @@ constellation/
 
 ```
 # 市场指向本仓库 skills/ 目录（marketplace.json 所在处）
-# 之后可安装 brainstorm-archive / kb-upkeep / star-site-miniprogram-automation
+# 之后可安装 brainstorm-archive / kb-upkeep / component-builder / portfolio-sync 等
 ```
 
 技能规范：每技能一个目录 + `SKILL.md`（frontmatter：`name` + `description`），
