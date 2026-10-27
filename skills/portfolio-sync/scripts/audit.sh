@@ -101,10 +101,28 @@ pr_cont=$( [ "$HAVE_PROFILE" = 1 ] && grep -oE '[0-9]+ 容器编排' "$PROFILE_T
 report_metric "容器数(compose服务-一次性job)" "$CANON_CONT" \
   "站点hero=${p_cont:-}" "站点star-site卡=${p_cardc:-}" "Profile=${pr_cont:-}"
 
-# ---------- ⑤ 公开仓库清单 vs Profile 代表作表 ----------
+# ---------- ⑤ 公开仓库清单 vs Profile/站点登记面 ----------
 echo ""
-echo "== Profile 代表作表覆盖的仓库（新开源仓需补行）"
-[ "$HAVE_PROFILE" = 1 ] && grep -oE 'github.com/Mein-Augenstern/[a-zA-Z-]+' "$PROFILE_TMP" | sort -u | sed 's|.*/||' | sed 's/^/  /'
+echo "== 公开仓登记核对（GitHub 全部公开仓 vs Profile/站点提及）"
+COVERED=$( { [ "$HAVE_PROFILE" = 1 ] && grep -oE 'github.com/Mein-Augenstern/[a-zA-Z0-9-]+' "$PROFILE_TMP"; \
+              [ "$HAVE_PAGES" = 1 ] && grep -oE 'github.com/Mein-Augenstern/[a-zA-Z0-9-]+' "$PAGES/index.html" "$PAGES/README.md"; } \
+            | grep -oE '[a-zA-Z0-9-]+$' | sort -u )
+if command -v gh >/dev/null 2>&1; then
+  PUBLIC=$(gh api 'users/Mein-Augenstern/repos?per_page=100' --paginate --jq '.[] | select(.fork == false and .name != "Mein-Augenstern") | .name' 2>/dev/null | sort -u)
+  for repo in $PUBLIC; do
+    case "$repo" in
+      # pages 仓经站点 URL 登记（Profile 作品集/站点自链），不走仓库地址形态，非缺口
+      mein-augenstern.github.io) continue ;;
+    esac
+    if grep -qx "$repo" <<<"$COVERED"; then
+      green "  ✓ $repo"
+    else
+      red "  ✗ $repo 公开但未在 Profile/站点登记（新开源仓需补：站点卡片+Profile代表作+相关仓库）"
+    fi
+  done
+else
+  dim "  gh 不可用，跳过公开仓核对；Profile 侧已登记：$(echo "$COVERED" | tr '\n' ' ')"
+fi
 
 echo ""
 dim "审计完成——✗ 行即本次同步待办。定性内容（新特性文案/链接/时间线）映射见 SKILL.md 映射表。"
