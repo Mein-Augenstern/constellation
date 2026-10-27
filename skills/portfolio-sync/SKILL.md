@@ -29,7 +29,8 @@ bash <skill目录>/scripts/audit.sh [GitHub工作区根目录，默认 ~/Documen
 | 5 | backend README | `~/Documents/GitHub/star-site-backend/README.md` | git push main |
 | 6 | invest 平台 README | `~/Documents/GitHub/invest/README.md` 或 invest-platform 子目录 | git push |
 | 7 | constellation 星座 README | `~/Documents/GitHub/constellation/README.md`（+ skills/marketplace.json） | git push main |
-| 8 | docs/星图（低频） | `constellation/docs/星图-*.md` | 按需，季度级 |
+| 8 | 电子书首页 | `~/Documents/GitHub/MUYI/book/index.md`（hero tagline 的篇数/题数——**构建进 Pages，本地改完即线上**） | 随 MUYI git push |
+| 9 | docs/星图（低频） | `constellation/docs/星图-*.md` | 按需，季度级 |
 
 ## 权威数据源表（每个数字只有一个真源，禁止拍脑袋）
 
@@ -48,7 +49,7 @@ bash <skill目录>/scripts/audit.sh [GitHub工作区根目录，默认 ~/Documen
 
 | 触发改动 | 需同步的位置（精确到区块） |
 |---|---|
-| MUYI 新增文章 commit | ① 站点 hero 统计"深度笔记"+ whoami 块 find 数字 + MUYI 卡"篇数"（3 处）② Profile README 统计行"343 篇深度笔记" + MUYI 行 ③ MUYI README 徽章与体系节（文章 commit 通常自带，核对即可） |
+| MUYI 新增文章 commit | ① 站点 hero 统计"深度笔记"+ whoami 块 find 数字 + MUYI 卡"篇数"（3 处）② Profile README 统计行"343 篇深度笔记" + MUYI 行 ③ MUYI README 徽章与体系节（文章 commit 通常自带，核对即可）④ **电子书首页 tagline**（book/index.md 的"N 篇实文/N 题自测"——曾漏同步停在 361/121） |
 | MUYI 自测清单增删题 | ① 站点 MUYI 卡"自测清单 N 题" ② Profile README MUYI 行"N 题自测" ③ MUYI README 徽章（历史坑：徽章与正文曾不一致，三处必须同值） |
 | 组件库测试数/模块数变化 | ① 组件仓 README"98 测试"等表述 ② 站点组件卡"98 项单测" + hero 第 4 格 ③ Profile README 组件行 |
 | 组件库结构性变化（组件增减/模块合并） | 同上三面 + 站点 whoami `ls engineering/`（若出现新顶层目录）+ backend README 若引用了模块形态 |
