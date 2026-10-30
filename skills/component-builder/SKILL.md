@@ -48,7 +48,10 @@ CREATE TABLE IF NOT EXISTS xxx (
 
 ## 第 5 步：SQL 载体（Mapper XML，同包自动发现）
 
-- Mapper 接口**纯接口零注解 SQL**；XML 放 `src/main/resources` 下与接口**同包路径**（SQL 配置逐条注释用途——注释规范不因载体变化豁免），
+- Mapper 接口**纯接口零注解 SQL**；XML 放 `src/main/resources` 下与接口**同包路径**——
+  这是 MyBatis 官方自动发现约定（addMapper/@MapperScan 时按接口 FQN 到同路径加载同名 XML），
+  深路径 = 消费方零配置 mapper-locations，看似怪实为机制本体，勿挪浅目录
+  （SQL 配置逐条注释用途——注释规范不因载体变化豁免），
   `Configuration.addMapper(XxxMapper.class)` 按命名空间自动发现加载
 - 约定：`${tableName}` 为白名单校验（`[A-Za-z0-9_]+`）后的表名替换；业务值一律 `#{}` 参数绑定
 - 接口多参数时实体参数必须 `@Param("cmd")`，XML 写 `#{cmd.xxx}`（ParamMap 无属性直通）
