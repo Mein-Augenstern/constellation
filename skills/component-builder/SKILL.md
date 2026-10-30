@@ -52,8 +52,10 @@ CREATE TABLE IF NOT EXISTS xxx (
   `Configuration.addMapper(XxxMapper.class)` 按命名空间自动发现加载
 - 约定：`${tableName}` 为白名单校验（`[A-Za-z0-9_]+`）后的表名替换；业务值一律 `#{}` 参数绑定
 - 接口多参数时实体参数必须 `@Param("cmd")`，XML 写 `#{cmd.xxx}`（ParamMap 无属性直通）
-- JDBC 路径（无 MyBatis 消费方）的方言抽象接口 `{table}` 占位 + `?` 绑定，MySQL 实现为默认——
-  两种载体择一，**Java 代码里永远不出现 SQL 字符串**
+- **SQL 配置外置铁律（2026-10-30 巡检产出）**：MyBatis 消费走 Mapper XML；JDBC 方言语句放
+  `resources/sql/mysql/<组件>-mysql.properties`（key=方言接口方法名，Java 类只做加载与缺键快速失败）；
+  Redis Lua 放 `resources/sql/*.lua`。动态过滤/分页排序片段也是方言方法（filterStatus/pageOrderLimit），
+  **Java 里连 AND 片段都不拼**。配套健全性测试：断言配置 key 与接口全对齐（缺键提前到 CI 暴露）
 
 ## 第 6 步：事务与并发
 

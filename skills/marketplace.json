@@ -42,6 +42,10 @@
     {
       "name": "link-doctor",
       "source": "./link-doctor"
+    },
+    {
+      "name": "component-reviewer",
+      "source": "./component-reviewer"
     }
   ]
 }
