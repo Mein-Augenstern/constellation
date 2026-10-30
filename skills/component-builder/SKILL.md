@@ -89,6 +89,14 @@ core 的 `XxxConfig`（业务参数）+ starter 的 `XxxProperties extends XxxCo
 Store / Client / Scheduler / Mapper / Metrics / HealthIndicator / AdminGuard——
 应用自定义任何一个 Bean，自动装配整体让位；micrometer/actuator 缺席时 NOOP 降级不阻断。
 
+## 第 8.5 步：README 分层规约
+
+README 是**概览**不是参考手册——只放：组件一览表（一句话+链接到详细文档）、快速开始（依赖+最少配置）、
+表规范铁律、设计模式速览、构建命令、后续规划摘要。超过 ~150 行即拆。
+详细使用手册（全量配置表/执行器写法/调度模式/管控端点）放 `docs/<组件>.md`；
+设计决策记录（每个"为什么"一条）放 `docs/design.md`；完整规划放 `docs/roadmap.md`。
+**读者 3 分钟内从 README 拿到"这是什么、引哪个依赖、最小配置是什么"**。
+
 ## 第 9.5 步：注释规约（门禁项，verify 阶段 Spotless 不查但巡检查）
 
 - 公开类/接口必带职责说明与 `@author`/`@date`
