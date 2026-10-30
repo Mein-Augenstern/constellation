@@ -57,6 +57,11 @@ CREATE TABLE IF NOT EXISTS xxx (
 
 ## 第 6 步：事务与并发
 
+- **分布式状态铁律：跨实例共享的状态必须存存储端，禁止 Pod 本地变量承载正确性**。
+  实战例：锁重入计数曾放实例内存 Map（同 ownerId 两 Pod 各数各的，B 一次 unlock 放掉 A 的外层锁）——
+  改为锁表 `hold_count` 列（UPDATE 内 CASE 递增/递减）/Redis hash（field=ownerId，value=层数，Lua 原子）
+  后跨实例共享一致。Pod 本地只允许**性能提示缓存**（如播种记忆），且必须配自愈路径
+  （未抢到时校验存活性→作废缓存→重试），正确性不得依赖它
 - 编程式事务：`TransactionTemplate` 回调（方法名避开 `execute`——安全门禁误报），**不用 @Transactional**（库不感染宿主代理配置）
 - 多实例互斥：两步令牌法（UPDATE 认领 + 按令牌取回，派生表绕 MySQL ERROR 1093）；
   单条原子认领走 UPDATE 条件命中即 `>0`
@@ -94,7 +99,7 @@ Store / Client / Scheduler / Mapper / Metrics / HealthIndicator / AdminGuard—�
 3. SQL 全在 Mapper XML（或方言接口），Java 零 SQL 字符串？
 4. XML 与接口同包、命名空间一致、实体参数 `@Param` 前缀对齐？
 5. `${}` 仅白名单表名，业务值全 `#{}` 参数绑定？
-6. 多实例并发语义有测试（令牌互斥/续期/释放）？
+6. 多实例并发语义有测试（令牌互斥/续期/释放）；跨实例状态在存储端（Pod 本地仅性能提示缓存且带自愈）？
 7. 编程式事务，无 @Transactional？
 8. 线程池隔离 + SmartLifecycle 托管？
 9. 让位清单全覆盖（ConditionalOnMissingBean）？
