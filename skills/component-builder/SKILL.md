@@ -89,6 +89,15 @@ core 的 `XxxConfig`（业务参数）+ starter 的 `XxxProperties extends XxxCo
 Store / Client / Scheduler / Mapper / Metrics / HealthIndicator / AdminGuard——
 应用自定义任何一个 Bean，自动装配整体让位；micrometer/actuator 缺席时 NOOP 降级不阻断。
 
+## 第 9.5 步：注释规约（门禁项，verify 阶段 Spotless 不查但巡检查）
+
+- 公开类/接口必带职责说明与 `@author`/`@date`
+- **每个公开方法（含 getter/setter）须有 javadoc**——至少一行语义说明；配置类 getter/setter
+  写"读取/设置 XX"即可，不许裸行（实战例：LockCoreConfig 曾 8 个 getter/setter 裸行，
+  SequenceConfig/AsyncCommandConfig 同类全部有 javadoc——孤例即缺陷）
+- 字段注释写语义（不是复述类型）；常量注释写语义来源（如"停机排空上限"）
+- SQL/Lua 配置逐条注释用途；注释写"为什么"不写"是什么"
+
 ## 第 10 步：测试与构建门禁
 
 - 单测 H2 内存库全链路（建表 → 提交 → 认领 → 执行 → 回收 → 分页）；真库 IT 前缀 `*IT.java` 走 failsafe，
