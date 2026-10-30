@@ -97,6 +97,20 @@ README 是**概览**不是参考手册——只放：组件一览表（一句话
 设计决策记录（每个"为什么"一条）放 `docs/design.md`；完整规划放 `docs/roadmap.md`。
 **读者 3 分钟内从 README 拿到"这是什么、引哪个依赖、最小配置是什么"**。
 
+## 第 9.3 步：代码写法规约（巡检产出，持续追加）
+
+- **禁止全路径类名**：字段/方法签名/局部变量中不得写 `java.util.function.LongSupplier`、
+  `com.xp.starsite.lock.client.LockAdminClient.LockInfo` 等全路径——一律 import 后用简名。
+  唯一例外：javadoc `{@link}` 中的全路径（编译器不解析 import 域）
+- **包名一致性（facade/client）**：门面角色的包统一命名——sequence 用 `facade/`，
+  async/lock 用 `client/` 含同义类（AsyncCommandClient/LockClient 即门面）——**0.2.0 统一改为 facade/**
+  （breaking change，SNAPSHOT 阶段可改，需与 backend 联动）
+- **测试 EmbeddedDatabaseBuilder 显式 setName**：默认不生成唯一库名——多测试类共享 JVM 时
+  H2 同名库互相污染（单类绿/合跑红）；显式 `.setName("<类名-snake-case>")` 隔离
+- **record 作 resultType**：MyBatis mapper XML 中 `resultType` 引用嵌套 record 用 `$` 分隔
+  （`Outer$Inner`），Java 侧 import `Outer.Inner` 即可用简名
+- **properties → XML 方言文件**（已固化第 5 步）：SQL 的直觉载体是 XML；CDATA 承载多行原生 SQL
+
 ## 第 9.5 步：注释规约（门禁项，verify 阶段 Spotless 不查但巡检查）
 
 - 公开类/接口必带职责说明与 `@author`/`@date`
