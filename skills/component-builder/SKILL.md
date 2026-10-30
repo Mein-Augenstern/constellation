@@ -48,12 +48,14 @@ CREATE TABLE IF NOT EXISTS xxx (
 
 ## 第 5 步：SQL 载体（Mapper XML，同包自动发现）
 
-- Mapper 接口**纯接口零注解 SQL**；XML 放 `src/main/resources` 下与接口**同包路径**，
+- Mapper 接口**纯接口零注解 SQL**；XML 放 `src/main/resources` 下与接口**同包路径**（SQL 配置逐条注释用途——注释规范不因载体变化豁免），
   `Configuration.addMapper(XxxMapper.class)` 按命名空间自动发现加载
 - 约定：`${tableName}` 为白名单校验（`[A-Za-z0-9_]+`）后的表名替换；业务值一律 `#{}` 参数绑定
 - 接口多参数时实体参数必须 `@Param("cmd")`，XML 写 `#{cmd.xxx}`（ParamMap 无属性直通）
 - **SQL 配置外置铁律（2026-10-30 巡检产出）**：MyBatis 消费走 Mapper XML；JDBC 方言语句放
-  `resources/sql/mysql/<组件>-mysql.properties`（key=方言接口方法名，Java 类只做加载与缺键快速失败）；
+  `resources/sql/mysql/<组件>-mysql.xml`——**SQL 的直觉载体就是 XML**（同 MyBatis 生态，CDATA
+  可承载多行原生 SQL 与逐条 note 注释；properties 单行装不下带注释的 DDL，已被否决），
+  `<statement id>` 对应方言接口方法名，Java 类只做安全加载（拒 DOCTYPE/外部实体）与缺键快速失败；
   Redis Lua 放 `resources/sql/*.lua`。动态过滤/分页排序片段也是方言方法（filterStatus/pageOrderLimit），
   **Java 里连 AND 片段都不拼**。配套健全性测试：断言配置 key 与接口全对齐（缺键提前到 CI 暴露）
 

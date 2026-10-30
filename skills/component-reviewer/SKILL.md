@@ -18,14 +18,18 @@ description: 组件编码原则审视。用 SOLID 与组件库规约逐切面审
 2. **状态归属**：每个可变字段问"它的事实源在哪"——跨实例共享的事实必须在存储端
    （hold_count 列 / Redis hash field）；Pod 本地只允许性能提示缓存且必须带自愈路径。
 3. **SQL/脚本配置外置**：Java 代码零 SQL 字符串（含动态过滤片段与 ORDER BY 片段）。
-   MyBatis 消费走 Mapper XML；JDBC 方言走 `resources/sql/<组件>-mysql.properties`
-   （key=方法名）；Redis Lua 走 `resources/sql/*.lua`。方言 Java 类只做加载与 {table} 渲染。
+   MyBatis 消费走 Mapper XML；JDBC 方言走 `resources/sql/<组件>-mysql.xml`
+   （`<statement id>`=方法名，CDATA 多行原生 SQL——**SQL 的直觉载体是 XML，properties 已否决**）；
+   Redis Lua 走 `resources/sql/*.lua`。方言 Java 类只做安全加载（拒 DOCTYPE/外部实体）与 {table} 渲染。
 4. **契约清晰**：接口 javadoc 说出语义边界与不保证什么（轮询非通知/无公平性/fail-open 粒度）；
    行为约束必须有对应测试锁死。
 5. **DRY 与等价性**：三形态（jdbc/mybatis/memory）同一语义的重复实现，行为差异必须有
    测试互证（如列表不拉 payload 三形态同断言）。
 6. **重复度检查**：超过两处相同的结构（脚本三态/双 RowMapper 列清单），评估收拢成本；
    刻意的重复（可读性）注释说明意图。
+7. **注释规范**（2026-10-30 补——曾遗忘）：公开类/接口必带职责说明与 @author/@date；
+   注释写"为什么"；SQL/Lua 配置逐条注释用途（note 属性/文件头/行内注释——载体变了规约不变）。
+   巡检时专门扫最近提交的文件，注释缺失即登记。
 
 ## 工作流
 
@@ -42,7 +46,7 @@ description: 组件编码原则审视。用 SOLID 与组件库规约逐切面审
 
 | 发现 | 尺子 | 处置 |
 |---|---|---|
-| SequenceSql.MySql / AsyncCommandSql.MySql：SQL 字符串在 Java 内 | 3 配置外置 | 外置 properties，类改加载器 |
+| SequenceSql.MySql / AsyncCommandSql.MySql：SQL 字符串在 Java 内 | 3 配置外置 | 外置方言 XML（初版误用 properties，当日按直觉载体原则纠正为 XML），类改安全加载器 |
 | JdbcAsyncCommandStore：appendFilters/ORDER BY 片段 Java 拼接 | 3 配置外置 | 片段进同一 properties |
 | RedisLockClient：Lua 脚本 Java 常量 | 3 配置外置（脚本=存储语句） | 外置 .lua 资源 |
 | DbLockClient.tryLock：自愈编排混入互斥语义 | 1 SRP | 自愈移 Provisioner.healIfRowLost |
