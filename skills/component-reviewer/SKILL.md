@@ -43,6 +43,16 @@ description: 组件编码原则审视。用 SOLID 与组件库规约逐切面审
 5. **原则回写**：本轮巡检发现的新原则，回写 component-builder（规约+检查表）与本 skill
    （新尺子或新实战例）——两个 skill 是同一套原则的事前/事后形态。
 
+## 二轮巡检产出（2026-10-31，15 项修复回写）
+
+| 新原则 | 来源 |
+|---|---|
+| **配置键迁移收尾检查**：改了 Properties 键名/枚举值后，必须 grep docs/*.md、README 双语版、starter javadoc、examples/*/application.yml 四处旧值残留——`store: memory` 为非法值会被 Spring 静默忽略（P1 实战） | 2026-10-31 二轮巡检 #1 |
+| **三形态等价漏改防御**：给某一形态（如 JdbcStore）加功能后，必须 grep 同义其他形态（MyBatisStore/InMemoryStore）是否同步——8de4ac8 给 JdbcStore 注入 TimeSource 漏改了 MyBatis 形态 | 2026-10-31 二轮巡检 #4 |
+| **Map.of 空安全**：Map.of() 不接受 null 值——REST 端点用 Map.of 返回结果时，可空参数须提前归一 | 2026-10-31 二轮巡检 #3 |
+| **重取号静默默认 = 撞号风险**：分布式取号失败绝不可静默返回默认值（如 workerId=1），必须抛异常 | 2026-10-31 二轮巡检 #2 |
+| **README 双语版同步检查**：改了英文版 README 的数字/JDK/命令后，grep 中文版对应位置是否同步 | 2026-10-31 二轮巡检 #6 |
+
 ## 首轮巡检结论存档（2026-10-30，三组件）
 
 | 发现 | 尺子 | 处置 |
