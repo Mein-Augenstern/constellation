@@ -46,6 +46,10 @@
     {
       "name": "component-reviewer",
       "source": "./component-reviewer"
+    },
+    {
+      "name": "component-update",
+      "source": "./component-update"
     }
   ]
 }
