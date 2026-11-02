@@ -146,3 +146,16 @@ docker stop my-frpc && curl http://<公网>/health             # 应有明确错
 | vhost Host 路由 | 404（IP 直连时） | customDomains=[IP]，后端加 hostHeaderRewrite |
 | DNS 重绑定 | host not allowed | 后端 INVEST_HOSTS_EXTRA 放行网关容器名 |
 | MySQL 慢日志 OFF | 压测时慢 SQL 不可见 | SET GLOBAL slow_query_log=ON, long_query_time=0.5 |
+| **compose build 覆盖预构建镜像** | 新代码不生效 / digest 空 | docker run 直跑，见 java-service-redeploy skill |
+| **网关 DNS 缓存旧 IP** | 重启后端后网关 500 | docker restart star-platform-gateway |
+| **frpc stop/start 撞 proxy 名** | 60s 内隧道不恢复 | 等 frps 释放（1-2 分钟）或换 proxy name |
+| **logback 路径差异** | logs/ vs /app/logs/ | 检查 logback-spring.xml 的 LOG_PATH 变量 |
+| **容器间 DNS 短名解析** | star-platform-member 不可达 | 同网络容器名即 DNS，不需要 IP |
+
+## 并行会话协作纪律（2026-11-02 新增）
+
+两个 AI 会话并行操作同一仓库时的规则：
+- 提交一律**显式文件名**（禁 `git add -A`），避免误提交对方半成品
+- 动手前 `git status --short` 探测对方未提交改动
+- 容器重建前先看 `docker ps` 确认当前跑的是谁的版本
+- 重建后四端点验证（ping/trades/signals/overview），失败立即回滚

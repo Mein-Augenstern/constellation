@@ -65,6 +65,26 @@ done
 | 慢日志/慢查询 | `SHOW VARIABLES LIKE 'slow_query%'` / 应用层 slow log |
 | 服务发现 503 | `grep "Unable to find instance"` 在网关日志 |
 
+### traceId 跨服务断言（进阶）
+
+```bash
+# ① 确定网关生成的 traceId（digest 最后一行）
+GW_TID=$(docker exec <gateway> sh -c 'tail -1 <digest路径>/rpc-server-digest.log' \
+  | python3 -c "import json,sys; line=sys.stdin.read(); i=line.find('{'); print(json.loads(line[i:]).get('traceId',''))")
+
+# ② 在下游服务日志中 grep 同一 traceId
+docker logs <downstream> --since 60s 2>&1 | grep -c "$GW_TID"
+# 0 = 断裂（Spring Cloud Gateway GlobalFilter + mutate 不传播到 Netty，框架限制）
+# >0 = 透传成功
+
+# ③ 手动发送 X-Trace-Id 验证（这条路径通常通）
+curl -H "X-Trace-Id: my-test-$(date +%s)" ... → grep "my-test-" in downstream logs
+```
+
+**已知限制（2026-11-02 实证）**：Spring Cloud Gateway 的 GlobalFilter
+`exchange.mutate()` 不传播到 NettyRoutingFilter——网关自生成的 traceId 到不了
+下游。但客户端发送的 X-Trace-Id 能透传。彻底修复需 GatewayFilterFactory。
+
 ### P3（噪音——可以修）
 - 探针端点（/actuator/health）是否在打 digest（噪音）
 - 重复注册的容器（同名 proxy 占位、测试残留）
