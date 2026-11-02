@@ -151,6 +151,22 @@ docker stop my-frpc && curl http://<公网>/health             # 应有明确错
 | **frpc stop/start 撞 proxy 名** | 60s 内隧道不恢复 | 等 frps 释放（1-2 分钟）或换 proxy name |
 | **logback 路径差异** | logs/ vs /app/logs/ | 检查 logback-spring.xml 的 LOG_PATH 变量 |
 | **容器间 DNS 短名解析** | star-platform-member 不可达 | 同网络容器名即 DNS，不需要 IP |
+| **容器默认 UTC 时钟** | 定时任务凌晨 4 点触发（20:00 UTC=北京+8 偏移）；日志/时间戳全部差 8h | docker run 加 `-e TZ=Asia/Shanghai`（镜像需含 tzdata，`ls /usr/share/zoneinfo/Asia/Shanghai` 自查）；代码层触发点计算再套 ZoneInfo 双保险（2026-11-02 S09 实证） |
+
+## 分布式定时任务恰一执行（S09 模式，2026-11-02 实证）
+
+多实例部署（双容器）都要跑每日 cron 时，**不能每台都执行**——决策点收敛到共享 DB 一行：
+
+```
+所有实例同一时刻触发 → 原子 UPDATE lock 表（WHERE locked_until IS NULL OR < now）
+  ├─ 影响行数>0 → 获得锁者执行 → 完成后 release（仅持有者本人可释放）
+  └─ 0 → 静默跳过；持锁者崩溃 → TTL(30min) 过期 → 下轮自动接管
+```
+
+- 表语义与 Java starsite-lock 组件一致（lock_name 唯一键 + locked_until TTL + hold_count）
+- 恰一性由 `UNIQUE(lock_name)` 保证：两步争锁（UPDATE 接管 → INSERT OR IGNORE 建行）天然并发安全
+- 零新中间件；规模化（cron 管理/重试/告警）再迁 XXL-JOB/PowerJob，锁协议不变
+- 实测路径：`docker exec <容器A> python -c "acquire()"` → 容器 B status 端点看 `held_by` → B acquire=False → A release → B acquire=True
 
 ## 并行会话协作纪律（2026-11-02 新增）
 
