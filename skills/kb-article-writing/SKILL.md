@@ -159,6 +159,7 @@ flowchart TD
 | 中文文件名八进制 | git status 显示 `\346\226...` 难对齐 | 正常现象，按引号路径 add 即可 |
 | 裸 HTML/尖括号 | 书里被转义显示 | 仓库 config `markdown.html=false`（防 `<init>` 吞字）；泛型/标签写进代码块 |
 | 敏感词断言失败 | prepare-src 中断 | 按断言输出定位改源文（断言是发布前闸门） |
+| **serve 不重启假死** | 重建后点击侧栏/搜索全无反应、内容还能看 | `vitepress serve` 启动时对 dist 建文件快照（sirv），重建换哈希名后新 JS 全 404→水合失败；**每次 rebuild 后必须重启 serve**。诊断特征：`performance` 资源里 `app.*.js: 404` |
 
 ## 实战存档
 
