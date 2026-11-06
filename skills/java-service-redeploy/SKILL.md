@@ -106,6 +106,8 @@ docker restart star-platform-gateway  # 清 DNS + LoadBalancer 缓存
 | 症状 | 根因 | 解法 |
 |---|---|---|
 | 新代码不生效 | compose build 覆盖预构建镜像 | `docker run` 直跑，不用 compose |
+| **预构建 JAR 进不了镜像** | build 报 `target/...jar not found`（.dockerignore 排除 target/） | 预构建模式别用仓库根当 context——JAR 拷独立 staging 目录（如 /tmp/xxx-build/）再 build（2026-11-06 reminder 实证） |
+| **修完组件忘重建镜像** | 容器跑旧代码；`docker images` 时间戳早于修复时刻 | 组件 fix → mvn install → 消费方重打包 → 镜像 rebuild → docker run，链上无一步可跳；JAR 是 ZIP，验证修法用 `zipfile.ZipFile().read()` 后二进制查，直接 grep 压缩字节恒 False |
 | digest 文件 0 字节 | 容器内 JAR 没有新 Filter | Step 2 的简单 Dockerfile |
 | 重启后其他服务 500 | 网关 DNS 缓存旧 IP | `docker restart star-platform-gateway` |
 | 网关→member traceId 断 | GlobalFilter mutate 不传播到 Netty | 框架限制，需 GatewayFilterFactory |
