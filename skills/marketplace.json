@@ -50,6 +50,18 @@
     {
       "name": "component-update",
       "source": "./component-update"
+    },
+    {
+      "name": "cloudflare-free-deploy",
+      "source": "./cloudflare-free-deploy"
+    },
+    {
+      "name": "frontend-build-inject-verify",
+      "source": "./frontend-build-inject-verify"
+    },
+    {
+      "name": "single-to-multi-tenant",
+      "source": "./single-to-multi-tenant"
     }
   ]
 }
