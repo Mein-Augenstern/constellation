@@ -20,10 +20,16 @@ description: star-site 系列通用组件构造十步规约。用户说"建组�
 - starter 内注册 `META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports`
   （MyBatis 装配排在默认装配之前）
 
-## 第 2 步：分包（package-per-concern）
+## 第 2 步：分包（package-per-concern + 实现按存储拆包）
 
 `model / config / clock / facade / client / executor / scheduler / store / metrics / admin`
 ——每个包一个职责，评审时按包扫。门面（facade）+ 客户端（client）是消费方唯一入口。
+
+**实现按存储拆包**（2026-11-13 五组件统一，design D13）：`store/` 只放契约层
+（Store SPI + 方言接口 + 共享值对象）；实现各归自家包——`jdbc/`（表形态，方言可注入）、
+`memory/`、`redis/`（Lua）、`mybatis/`；DB 锁实现归 `db/`；sequence 按形态归
+`mysql/` / `redis/` / `standalone/`。禁止多存储实现混居一个目录——看包名即知存储
+载体，与扩展指南三层通道（L3 自定义存储实现包）天然对位。
 
 ## 第 3 步：胖模型拆分（状态机收编枚举）
 
