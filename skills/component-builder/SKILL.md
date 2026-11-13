@@ -1,6 +1,6 @@
 ---
 name: component-builder
-description: star-site 系列通用组件构造十步规约。用户说"建组件、新建组件、组件改造、组件标准化"时触发。沉淀自 star-site-components 三组件（sequence/async-command/lock）实战，后续所有组件建设一律按此执行。
+description: star-site 系列通用组件构造十步规约。用户说"建组件、新建组件、组件改造、组件标准化"时触发。沉淀自 star-site-components 组件库实战（sequence/async-command/lock 起家，现五组件：+schedule/idempotent），后续所有组件建设一律按此执行。
 ---
 
 # 组件构造十步规约（star-site-components 实战沉淀）

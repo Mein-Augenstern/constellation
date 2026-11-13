@@ -1,6 +1,6 @@
 ---
 name: component-reviewer
-description: 组件编码原则审视。用 SOLID 与组件库规约逐切面审查 star-site-components 三组件的实现代码，产出问题清单（类/违反原则/建议/优先级）并驱动优化。用户说"审视组件、巡检三组件、代码原则检查、职责单一吗、设计模式审视、组件代码优化"等一律触发。与 component-builder 的关系：builder 管建造规约（事前），本 skill 管实现审视（事后）——巡检发现的新原则回写进两个 skill。
+description: 组件编码原则审视。用 SOLID 与组件库规约逐切面审查 star-site-components 五组件（sequence/async-command/lock/schedule/idempotent）的实现代码，产出问题清单（类/违反原则/建议/优先级）并驱动优化。用户说"审视组件、巡检组件、巡检三组件、代码原则检查、职责单一吗、设计模式审视、组件代码优化"等一律触发。与 component-builder 的关系：builder 管建造规约（事前），本 skill 管实现审视（事后）——巡检发现的新原则回写进两个 skill。
 ---
 
 # 组件编码原则审视（component-reviewer）
