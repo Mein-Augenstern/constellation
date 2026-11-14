@@ -128,6 +128,13 @@ README 是**概览**不是参考手册——只放：组件一览表（一句话
   SequenceConfig/AsyncCommandConfig 同类全部有 javadoc——孤例即缺陷）
 - 字段注释写语义（不是复述类型）；常量注释写语义来源（如"停机排空上限"）
 - SQL/Lua 配置逐条注释用途；注释写"为什么"不写"是什么"
+- **外部规范对标豁免清单**（2026-11-14 P3C 黄山版+Google Style 巡检产出）：线程池一律
+  显式 `ThreadPoolExecutor`/`ScheduledThreadPoolExecutor` + 命名守护工厂（禁 Executors
+  快捷方法）；值对象公开 API 必须补 equals/hashCode（record 改类时容易丢）；跨载体
+  等值比较是正确性关键路径时，精度契约写进代码（如统一 truncatedTo(SECONDS)）而非
+  靠隐含契约。**架构级豁免**（P3C 扫描会报但刻意保留，评审时引本条）：catch(Exception)
+  边界吞噬（调度器必须活着，全部带 why 注释）；`return null` 在 mapper"未找到"契约层
+  （公开 API 包 Optional）；业务键直出日志（无个人敏感字段，引擎侧已截断防刷屏）
 
 ## 第 10 步：测试与构建门禁
 
